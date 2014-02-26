@@ -1,0 +1,16 @@
+//
+//  FileProcessing.h
+//  Dazibao
+//
+//  Created by Владислав Фиц on 10.11.13.
+//  Copyright (c) 2013 Vladislav Fitc. All rights reserved.
+//
+
+#ifndef Dazibao_FileProcessing_h
+#define Dazibao_FileProcessing_h
+
+int checkHeader(struct Header h);
+//struct Header *getHeader(FILE *file);
+struct Header *deserializeHeader(char *dazibao);
+
+#endif

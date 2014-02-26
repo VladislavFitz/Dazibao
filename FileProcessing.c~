@@ -1,0 +1,44 @@
+//
+//  FileProcessing.c
+//  Dazibao
+//
+//  Created by Владислав Фиц on 10.11.13.
+//  Copyright (c) 2013 Vladislav Fitc. All rights reserved.
+//
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <string.h>
+
+#include "Structures.h"
+#include "sys/mman.h"
+#include "sys/stat.h"
+
+
+
+int checkHeader(struct Header h){
+    /* Checks if Dazibao file header is correct */
+    /* Returns 1 if it is correct else returns 0 */
+    if (h.magic == 53 && h.version == 0) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+
+struct Header *deserializeHeader(char *dazibao){
+    char myByte[HEADER_LENGTH];
+    memcpy(myByte, dazibao, HEADER_LENGTH);
+    if (myByte) {
+        struct Header *head = malloc(sizeof(struct Header));
+        head->magic = myByte[0];
+        head->version = myByte[1];
+        short k = myByte[2] << 8 | myByte[3];
+        head->mbz = k;
+        return head;
+    }
+    else
+        return NULL;
+}
